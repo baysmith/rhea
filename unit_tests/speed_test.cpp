@@ -11,7 +11,6 @@
 #include <vector>
 
 #include "../rhea/simplex_solver.hpp"
-#include "../rhea/linear_equation.hpp"
 
 inline double uniform_rand()
 {
@@ -44,13 +43,13 @@ int main(int argc, char** argv)
 
     std::vector<rhea::simplex_solver> slv(solvers);
     for (auto& s : slv)
-        s.set_autosolve(false);
+        s.auto_update(false);
 
     std::vector<rhea::variable> vars;
     for (size_t i(0); i < nr_vars; ++i) {
         vars.emplace_back((int)i);
-        for (auto& s : slv)
-            s.add_stay(vars[i]);
+        // for (auto& s : slv)
+        //     s.add_stay(vars[i]);
     }
 
     size_t cns_made(cns * 2);
@@ -65,9 +64,9 @@ int main(int argc, char** argv)
                     * coeff;
         }
         if (uniform_rand() < ineq_prob)
-            constraints[j] = rhea::linear_inequality(std::move(expr));
+            constraints[j] = rhea::constraint(std::move(expr), rhea::relation::eq);
         else
-            constraints[j] = rhea::linear_equation(std::move(expr));
+            constraints[j] = rhea::constraint(std::move(expr), rhea::relation::eq);
     }
 
     auto timer(clock.now());
@@ -100,11 +99,11 @@ int main(int argc, char** argv)
 
     timer = clock.now();
     for (auto& s : slv) {
-        s.begin_edit();
+        // s.begin_edit();
         for (size_t m(0); m < resolves; ++m) {
             s.suggest_value(e1, e1.value() * 1.001)
                 .suggest_value(e2, e2.value() * 1.001)
-                .resolve();
+                .update_external_variables();
         }
     }
     auto time_resolve(clock.now() - timer);
@@ -112,8 +111,8 @@ int main(int argc, char** argv)
     // ------
 
     timer = clock.now();
-    for (auto& s : slv)
-        s.end_edit();
+    // for (auto& s : slv)
+    //     s.end_edit();
 
     auto time_endedit(clock.now() - timer);
 

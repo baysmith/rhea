@@ -93,7 +93,7 @@ public:
     /** Create a new floating pointe variable.
      * \param value  The variable's initial value
      */
-    variable(int value)
+    explicit variable(int value)
         : p_{std::make_shared<float_variable>(value)}
     {
     }
@@ -101,7 +101,7 @@ public:
     /** Create a new floating point variable.
      * \param value  The variable's initial value
      */
-    variable(unsigned int value)
+    explicit variable(unsigned int value)
         : p_{std::make_shared<float_variable>(value)}
     {
     }
@@ -109,7 +109,7 @@ public:
     /** Create a new floating point variable.
      * \param value  The variable's initial value
      */
-    variable(float value)
+    explicit variable(float value)
         : p_{std::make_shared<float_variable>(value)}
     {
     }
@@ -117,7 +117,7 @@ public:
     /** Create a new floating point variable.
      * \param value  The variable's initial value
      */
-    variable(double value)
+    explicit variable(double value)
         : p_{std::make_shared<float_variable>(value)}
     {
     }

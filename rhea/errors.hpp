@@ -12,6 +12,16 @@
 namespace rhea
 {
 
+template<typename E, typename... Args>
+void throw_if_enabled(Args... args)
+{
+#if __cpp_exceptions
+    throw E(std::forward<Args>(args)...);
+#else
+    std::abort();
+#endif
+}
+
 class variable;
 
 /** Base class for all Rhea exceptions. */

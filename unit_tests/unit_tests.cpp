@@ -375,7 +375,7 @@ BOOST_AUTO_TEST_CASE(delete2_test)
     simplex_solver solver;
 
     solver.add_constraints(
-        {x == 100 | strength::weak(), y == 120 | strength::strong()});
+        {(x == 100) | strength::weak(), (y == 120) | strength::strong()});
 
     BOOST_CHECK_EQUAL(x.value(), 100);
     BOOST_CHECK_EQUAL(y.value(), 120);
@@ -407,7 +407,7 @@ BOOST_AUTO_TEST_CASE(delete3_test)
     variable x(0);
     simplex_solver solver;
 
-    solver.add_constraint(x == 100 | strength::weak());
+    solver.add_constraint((x == 100) | strength::weak());
     BOOST_CHECK_EQUAL(x.value(), 100);
 
     constraint c10(x <= 10), c10b(x <= 10);
@@ -442,7 +442,7 @@ BOOST_AUTO_TEST_CASE(set_constant2_test)
 {
     variable x;
     simplex_solver solver;
-    auto cn = solver.add_constraint(x == 100 | strength::medium());
+    auto cn = solver.add_constraint((x == 100) | strength::medium());
     BOOST_CHECK_EQUAL(x.value(), 100);
     solver.set_constant(cn, 110);
     BOOST_CHECK_EQUAL(x.value(), 110);
@@ -490,7 +490,7 @@ BOOST_AUTO_TEST_CASE(set_constant5_test)
 {
     variable x;
     simplex_solver solver;
-    auto cn = solver.add_constraint(x >= 100 | strength::medium());
+    auto cn = solver.add_constraint((x >= 100) | strength::medium());
     BOOST_CHECK_EQUAL(x.value(), 100);
     solver.set_constant(cn, 110);
     BOOST_CHECK_EQUAL(x.value(), 110);
@@ -503,7 +503,7 @@ BOOST_AUTO_TEST_CASE(set_constant6_test)
 {
     variable x;
     simplex_solver solver;
-    auto cn = solver.add_constraint(x <= 100 | strength::medium());
+    auto cn = solver.add_constraint((x <= 100) | strength::medium());
     BOOST_CHECK_EQUAL(x.value(), 100);
     solver.set_constant(cn, 50);
     BOOST_CHECK_EQUAL(x.value(), 50);

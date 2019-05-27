@@ -100,7 +100,7 @@ public:
     {
         auto found = terms_.find(v);
         if (found == terms_.end())
-            throw std::runtime_error("cannot solve for unknown term");
+            throw_if_enabled<std::runtime_error>("cannot solve for unknown term");
 
         auto coeff = -1.0 / found->second;
         terms_.erase(found);
@@ -159,7 +159,7 @@ public:
         }
 
         if (!x.is_constant())
-            throw nonlinear_expression{};
+            throw_if_enabled<nonlinear_expression>();
 
         return operator*=(x.constant());
     }
@@ -167,7 +167,7 @@ public:
     expression& operator/=(const expression& x)
     {
         if (!x.is_constant())
-            throw nonlinear_expression{};
+            throw_if_enabled<nonlinear_expression>();
 
         return operator/=(x.constant());
     }

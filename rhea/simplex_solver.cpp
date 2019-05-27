@@ -108,21 +108,21 @@ simplex_solver::make_expression(const constraint& c)
 void simplex_solver::add_constraint_(const constraint& c)
 {
     if (has_constraint(c))
-        throw duplicate_constraint();
+        throw_if_enabled<duplicate_constraint>();
 
     auto expr = make_expression(c);
     auto subject = choose_subject(expr);
 
     if (subject.is_nil() && all_dummies(expr.r)) {
         if (!near_zero(expr.r.constant()))
-            throw required_failure();
+            throw_if_enabled<required_failure>();
 
         subject = expr.var1;
     }
 
     if (subject.is_nil()) {
         if (!add_with_artificial_variable(expr.r))
-            throw required_failure();
+            throw_if_enabled<required_failure>();
     } else {
         expr.r.solve_for(subject);
         substitute_out(subject, expr.r);
@@ -159,7 +159,7 @@ void simplex_solver::set_constant_(const constraint& c, double constant)
 {
     auto found = constraints_.find(c);
     if (found == constraints_.end())
-        throw constraint_not_found();
+        throw_if_enabled<constraint_not_found>();
 
     auto& evs = found->second;
     auto delta = -(constant - evs.prev_constant);
@@ -211,7 +211,7 @@ void simplex_solver::remove_constraint_(const constraint& c)
 {
     auto found = constraints_.find(c);
     if (found == constraints_.end())
-        throw constraint_not_found();
+        throw_if_enabled<constraint_not_found>();
 
     auto info = found->second;
     constraints_.erase(found);
@@ -233,7 +233,7 @@ void simplex_solver::remove_constraint_(const constraint& c)
     } else {
         row_it = get_marker_leaving_row(info.marker);
         if (row_it == rows_.end())
-            throw internal_error("failed to find leaving row");
+            throw_if_enabled<internal_error>("failed to find leaving row");
 
         symbol leaving = row_it->first;
         row tmp = std::move(row_it->second);
@@ -267,7 +267,7 @@ void simplex_solver::suggest_value_(const variable& v, double value)
 {
     auto found = edits_.find(v);
     if (found == edits_.end())
-        throw unknown_edit_variable();
+        throw_if_enabled<unknown_edit_variable>();
 
     auto& info = found->second;
     auto delta = value - info.prev_constant;
@@ -404,10 +404,10 @@ symbol simplex_solver::choose_subject(const expression_result& expr)
 simplex_solver& simplex_solver::add_edit_var(const variable& v, strength s)
 {
     if (has_edit_var(v))
-        throw duplicate_edit_variable();
+        throw_if_enabled<duplicate_edit_variable>();
 
     if (s.is_required())
-        throw bad_required_strength();
+        throw_if_enabled<bad_required_strength>();
 
     constraint cn{v, relation::eq, s};
     add_constraint(cn);
@@ -428,7 +428,7 @@ void simplex_solver::remove_edit_var(const variable& v)
 {
     auto found = edits_.find(v);
     if (found == edits_.end())
-        throw unknown_edit_variable();
+        throw_if_enabled<unknown_edit_variable>();
 
     remove_constraint(found->second.c);
     edits_.erase(found);
@@ -530,7 +530,7 @@ void simplex_solver::optimize(const row& objective)
         }
 
         if (exit == rows_.end())
-            throw internal_error("objective function is unbounded.");
+            throw_if_enabled<internal_error>("objective function is unbounded.");
 
         // Pivot the entering symbol into the basis.
         auto exit_sym = exit->first;
@@ -566,7 +566,7 @@ void simplex_solver::dual_optimize()
         }
 
         if (entering.is_nil())
-            throw internal_error("Dual optimize failed.");
+            throw_if_enabled<internal_error>("Dual optimize failed.");
 
         // Pivot the entering symbol into the basis
         row tmp{std::move(it->second)};
@@ -639,7 +639,7 @@ void simplex_solver::change_strength(const constraint& c, strength s)
 
     auto& evs = ic->second;
     if (!evs.marker.is_error())
-        throw bad_required_strength{};
+        throw_if_enabled<bad_required_strength>();
 
     auto& cn = const_cast<constraint&>(ic->first);
     double old_coeff = cn.get_strength();

@@ -6,6 +6,8 @@
 //---------------------------------------------------------------------------
 #pragma once
 
+#include "errors.hpp"
+
 namespace rhea
 {
 
@@ -99,7 +101,7 @@ private:
     static void check_(double v)
     {
         if (v < 1.0 || v >= 1000.)
-            throw bad_weight{};
+            throw_if_enabled<bad_weight>();
     }
 
 private:

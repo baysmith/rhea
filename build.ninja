@@ -1,4 +1,5 @@
 cxx_flags = -I.
+#cxx_flags = -I. -fno-exceptions
 libs = -L. -lrhea
 unit_test_libs = -L. -lrhea -lboost_unit_test_framework-mt
 

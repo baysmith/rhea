@@ -34,7 +34,7 @@ public:
     void add(const variable& v)
     {
         if (stays_.count(v) == 0) {
-            auto c = (v == v.value() | strength::weak());
+            auto c = ((v == v.value()) | strength::weak());
             stays_[v] = item{c, v.value()};
             solver_.add_constraint(c);
         }
@@ -60,7 +60,7 @@ public:
             if (v.value() != it.v) {
                 solver_.remove_constraint(it.c);
                 it.v = v.value();
-                it.c = (v == it.v | strength::weak());
+                it.c = ((v == it.v) | strength::weak());
                 solver_.add_constraint(it.c);
             }
         }

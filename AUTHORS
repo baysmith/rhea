@@ -1,16 +1,16 @@
-
 Developers:
+  Bradley Smith <bradley@baysmith.com>
+
+
+This library is based on the Rhea project by:
   Nocte <nocte@hippie.nu>
 
-Documentation:
+with contributions by:
   Russell Keith-Magee <russell@keith-magee.com>
-
-Contributors:
   Håvard Fossli <hfossli@gmail.com>
   Juan Pedro Bolívar Puuente <jbo@ableton.com>
 
-
-This library is based on the Cassowary Constraint Solving Toolkit,
+The Rhea project was based on the Cassowary Constraint Solving Toolkit,
 implemented by:
 
   Greg J. Badros <gjb@cs.washington.edu> and

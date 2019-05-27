@@ -1,6 +1,5 @@
 Rhea
 ====
-[![Linux build status](https://travis-ci.org/Nocte-/rhea.png?branch=master)](https://travis-ci.org/Nocte-/rhea) [![Windows build status](https://ci.appveyor.com/api/projects/status/vnt20tikld91en78?svg=true)](https://ci.appveyor.com/project/Nocte-/rhea) [![Coverage Status](https://coveralls.io/repos/Nocte-/rhea/badge.png)](https://coveralls.io/r/Nocte-/rhea) [![Readthedocs build](https://readthedocs.org/projects/rhea/badge/?version=latest)](https://readthedocs.org/projects/rhea/) [![Slack Status](https://overconstrained-slack.herokuapp.com/badge.svg)](https://overconstrained-slack.herokuapp.com)
 
 About
 -----

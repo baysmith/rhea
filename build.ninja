@@ -1,0 +1,24 @@
+cxx_flags = -I.
+libs = -L. -lrhea
+unit_test_libs = -L. -lrhea -lboost_unit_test_framework-mt
+
+include common.ninja
+
+build rhea/symbol.o: cxx rhea/symbol.cpp
+build rhea/simplex_solver.o: cxx rhea/simplex_solver.cpp
+build librhea.a: lib rhea/symbol.o rhea/simplex_solver.o
+
+build hello.o: cxx hello.cpp
+build hello: link hello.o | librhea.a
+
+build unit_tests/unit_tests.o: cxx unit_tests/unit_tests.cpp
+build unit_tests: link unit_tests/unit_tests.o | librhea.a
+  libs = $unit_test_libs
+
+build unit_tests/speed_test.o: cxx unit_tests/speed_test.cpp
+build speed_test: link unit_tests/speed_test.o | librhea.a
+  libs = $unit_test_libs
+
+default librhea.a hello
+
+build all: phony librhea.a hello unit_tests speed_test

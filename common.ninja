@@ -1,0 +1,23 @@
+cc = gcc.exe
+cxx = g++.exe
+
+commonflags = $common_flags -Wall -Wendif-labels -Wpointer-arith -Wcast-align $
+    -Wwrite-strings -D_WIN32_WINNT=0x0501 -DWINVER=0x0501 -DWIN32_LEAN_AND_MEAN
+
+cxxflags = -Woverloaded-virtual $commonflags $qtcxxflags $cxx_flags
+
+linkflags = $link_flags
+
+rule cxx
+  command = $cxx $cxxflags -c $in -o $out
+  description = CXX $out
+
+rule link
+  command = $cxx $linkflags -o $out $in $qtlibs $libs -lws2_32
+  description = LINK $out
+
+
+rule lib
+  command = ar rvs $out $in
+  description = LIB $out
+

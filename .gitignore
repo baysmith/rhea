@@ -12,6 +12,15 @@
 *.la
 *.a
 
+# Compiled applictions
+*.exe
+hello
+unit_tests
+speed_test
+
+# Ninja build files
+.ninja_*
+
 # Backup files
 *~
 *.bak
@@ -20,19 +29,6 @@
 \#*\#
 .\#*
 *.tmp
-
-# CMake cruft
-/build/
-CMakeFiles
-Makefile
-*.cmake
-CMakeCache.txt
-CMakeLists.txt.user
-CMakeLists.txt.user.*
-tags
-*.json
-.excludes
-krb5doxy.tag
 
 # Generated headers
 rhea/version.hpp

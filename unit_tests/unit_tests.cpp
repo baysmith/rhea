@@ -225,14 +225,59 @@ BOOST_AUTO_TEST_CASE(linearexpr3_test)
     BOOST_CHECK_EQUAL((x - y).evaluate(), 2);
 }
 
+BOOST_AUTO_TEST_CASE(linearexpr4_test)
+{
+    variable x(4);
+
+    linear_expression expr(x + 3);
+    BOOST_CHECK_EQUAL(expr.evaluate(), 7);
+    BOOST_CHECK_EQUAL(expr.terms().size(), 1);
+    BOOST_CHECK(expr.terms().begin()->first.is(x));
+
+    linear_expression expr2(3 + x);
+    BOOST_CHECK_EQUAL(expr2.evaluate(), 7);
+    BOOST_CHECK_EQUAL(expr2.terms().size(), 1);
+    BOOST_CHECK(expr2.terms().begin()->first.is(x));
+
+    variable y(3.0);
+    linear_expression expr3(x + y);
+    BOOST_CHECK_EQUAL(expr3.evaluate(), 7);
+    BOOST_CHECK_EQUAL(expr3.terms().size(), 2);
+    auto term_iter = expr3.terms().begin();
+    if (term_iter->first.is(x))
+    {
+        ++term_iter;
+        BOOST_CHECK(term_iter->first.is(y));
+    }
+    else
+    {
+        ++term_iter;
+        BOOST_CHECK(term_iter->first.is(x));
+    }
+}
+
 BOOST_AUTO_TEST_CASE(linear_equation_test)
 {
     variable x(2.0), y(3.0);
 
     BOOST_CHECK((x == y - 1).is_satisfied());
+    BOOST_CHECK((x + 1 == y).is_satisfied());
     BOOST_CHECK(!(x == y).is_satisfied());
     BOOST_CHECK((x * 2 == y + 1).is_satisfied());
     BOOST_CHECK(!(x * 3 == y * 4).is_satisfied());
+}
+
+BOOST_AUTO_TEST_CASE(linear_equation_test_2)
+{
+    variable x(3.0), y(2.0);
+
+    constraint c1{ x == y + 1 };
+    BOOST_CHECK(c1.is_satisfied());
+    BOOST_CHECK_EQUAL(c1.expr().terms().size(), 2);
+
+    constraint c2{ x == 1 + y };
+    BOOST_CHECK_EQUAL(c2.expr().terms().size(), 2);
+    BOOST_CHECK(c2.is_satisfied());
 }
 
 BOOST_AUTO_TEST_CASE(linear_inequality_test)

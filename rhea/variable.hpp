@@ -9,16 +9,15 @@
 #include <cassert>
 #include <memory>
 
+#include "action_variable.hpp"
 #include "float_variable.hpp"
 #include "link_variable.hpp"
-#include "action_variable.hpp"
 
 namespace rhea
 {
 
 /** This tag is used in \a variable to link to external variables. */
-struct linked
-{
+struct linked {
 };
 
 /** A variable as used in an expression.
@@ -232,8 +231,7 @@ public:
     }
 
 private:
-    struct nil_
-    {
+    struct nil_ {
     };
 
     variable(const nil_&) {}
@@ -251,15 +249,13 @@ namespace std
 {
 
 template <>
-struct hash<rhea::variable> : public unary_function<rhea::variable, size_t>
-{
+struct hash<rhea::variable> : public unary_function<rhea::variable, size_t> {
     size_t operator()(const rhea::variable& v) const { return v.hash(); }
 };
 
 template <>
 struct equal_to<rhea::variable>
-    : public binary_function<rhea::variable, rhea::variable, bool>
-{
+    : public binary_function<rhea::variable, rhea::variable, bool> {
     bool operator()(const rhea::variable& a, const rhea::variable& b) const
     {
         return a.is(b);

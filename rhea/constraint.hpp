@@ -6,10 +6,10 @@
 //---------------------------------------------------------------------------
 #pragma once
 
-#include <memory>
 #include "linear_expression.hpp"
 #include "relation.hpp"
 #include "strength.hpp"
+#include <memory>
 
 namespace rhea
 {
@@ -81,9 +81,8 @@ public:
 
     constraint(const constraint&) = default;
     constraint(constraint&&) = default;
-    constraint& operator= (const constraint&) = default;
-    constraint& operator= (constraint&&) = default;
-
+    constraint& operator=(const constraint&) = default;
+    constraint& operator=(constraint&&) = default;
 
     const linear_expression& expr() const { return p_->expr_; }
     relation oper() const { return p_->op_; }
@@ -115,8 +114,7 @@ public:
     size_t hash() const { return std::hash<std::shared_ptr<data>>()(p_); }
 
 private:
-    struct data
-    {
+    struct data {
         data(linear_expression&& e, relation o, strength s)
             : expr_{std::move(e)}
             , op_{o}
@@ -229,8 +227,8 @@ namespace std
 
 /** Hash function, required for std::unordered_map. */
 template <>
-struct hash<rhea::constraint> : public unary_function<rhea::constraint, size_t>
-{
+struct hash<rhea::constraint>
+    : public unary_function<rhea::constraint, size_t> {
     size_t operator()(const rhea::constraint& v) const { return v.hash(); }
 };
 

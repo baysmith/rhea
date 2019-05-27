@@ -6,9 +6,9 @@
 //---------------------------------------------------------------------------
 #pragma once
 
+#include "errors.hpp"
 #include <cassert>
 #include <string>
-#include "errors.hpp"
 
 namespace rhea
 {

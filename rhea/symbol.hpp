@@ -41,11 +41,11 @@ public:
         error = 'e',
 
         /** A dummy variable.
-         * An inequality has a slack variable that can be used as a marker. Non-
-         * required constraints have error variables. Required equalities have
-         * neither, so we introduce a dummy variable that always remains zero,
-         * and only serves as a marker to find back the constraint's influences
-         * in the tableau. */
+         * An inequality has a slack variable that can be used as a marker.
+         * Non- required constraints have error variables. Required equalities
+         * have neither, so we introduce a dummy variable that always remains
+         * zero, and only serves as a marker to find back the constraint's
+         * influences in the tableau. */
         dummy = 'd'
     };
 
@@ -101,15 +101,13 @@ namespace std
 {
 
 template <>
-struct hash<rhea::symbol> : public unary_function<rhea::symbol, size_t>
-{
+struct hash<rhea::symbol> : public unary_function<rhea::symbol, size_t> {
     size_t operator()(const rhea::symbol& v) const { return v.id(); }
 };
 
 template <>
 struct equal_to<rhea::symbol>
-    : public binary_function<rhea::symbol, rhea::symbol, bool>
-{
+    : public binary_function<rhea::symbol, rhea::symbol, bool> {
     bool operator()(const rhea::symbol& a, const rhea::symbol& b) const
     {
         return a.is(b);

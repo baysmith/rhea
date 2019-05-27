@@ -13,7 +13,8 @@ namespace rhea
 {
 
 /** Linear expression.
- * Expressions have the form \f$a_0x_0 + a_1x_1 + \ldots + c\f$, where \f$x_n\f$
+ * Expressions have the form \f$a_0x_0 + a_1x_1 + \ldots + c\f$, where
+ \f$x_n\f$
  * is a variable, \f$a_n\f$ are non-zero coefficients, and \f$c\f$ is a
  * constant.
  *

@@ -6,8 +6,8 @@
 //---------------------------------------------------------------------------
 #pragma once
 
-#include <functional>
 #include "float_variable.hpp"
+#include <functional>
 
 namespace rhea
 {

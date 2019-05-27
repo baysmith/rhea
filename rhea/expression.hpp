@@ -6,17 +6,17 @@
 //---------------------------------------------------------------------------
 #pragma once
 
-#include <unordered_map>
 #include "approx.hpp"
 #include "errors.hpp"
+#include <unordered_map>
 
 namespace rhea
 {
 
 /** Linear expression.
- * Expressions have the form \f$a_0x_0 + a_1x_1 + \ldots + c\f$, where \f$x_n\f$
- * is a variable, \f$a_n\f$ are non-zero coefficients, and \f$c\f$ is a
- * constant.
+ * Expressions have the form \f$a_0x_0 + a_1x_1 + \ldots + c\f$, where
+ * \f$x_n\f$ is a variable, \f$a_n\f$ are non-zero coefficients, and \f$c\f$ is
+ * a constant.
  */
 template <typename T>
 class expression
@@ -51,11 +51,11 @@ public:
     void erase(const var_type& v) { terms_.erase(v); }
 
     /** Replace \a v with an equivalent symbolic expression.
-    * \param v     The variable to be replaced
-    * \param expr  The expression to replace it with
-    * \return True if \a v was substituted, false if \a v was not part of
-    *         the expression.
-    */
+     * \param v     The variable to be replaced
+     * \param expr  The expression to replace it with
+     * \return True if \a v was substituted, false if \a v was not part of
+     *         the expression.
+     */
     bool substitute_out(const var_type& v, const expression& expr)
     {
         auto it = terms_.find(v);
@@ -114,9 +114,9 @@ public:
     }
 
     /** Get the coefficient of one of the terms.
-    * \param v  The variable to look for
-    * \return The term's coefficient, or zero if \a v does not occur
-    *         in this expression */
+     * \param v  The variable to look for
+     * \return The term's coefficient, or zero if \a v does not occur
+     *         in this expression */
     double coefficient(const var_type& v) const
     {
         auto i = terms_.find(v);

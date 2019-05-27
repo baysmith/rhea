@@ -23,7 +23,7 @@ class simplex_solver;
 
 namespace std
 {
-ostream& operator<< (ostream&, const rhea::simplex_solver&);
+ostream& operator<<(ostream&, const rhea::simplex_solver&);
 }
 
 namespace rhea
@@ -33,11 +33,10 @@ typedef expression<symbol> row;
 
 /** Solver that implements the Cassowary incremental simplex algorithm. */
 class simplex_solver
-{    
+{
 public:
     /** This struct is used as a parameter for the suggest() function. */
-    struct suggestion
-    {
+    struct suggestion {
         const variable& v;
         double suggested_value;
     };
@@ -109,8 +108,7 @@ private:
     void remove_constraint_(const constraint& c);
 
     /** Keep track of the constraints' marker and slack variables. */
-    struct constraint_info
-    {
+    struct constraint_info {
         symbol marker;
         symbol other;
         double prev_constant;
@@ -118,8 +116,7 @@ private:
 
     /** Bundles a constraint, positive and negative error variables, and a
      ** prior edit constant for edit variables. */
-    struct edit_info
-    {
+    struct edit_info {
         bool operator==(const symbol& comp) const { return plus.is(comp); }
 
         constraint c;
@@ -130,8 +127,7 @@ private:
 
     /** Internal bookkeeping of the constraint and error variables introduced
      ** by a stay on a variable. */
-    struct stay_info
-    {
+    struct stay_info {
         constraint c;
         symbol plus;
         symbol minus;
@@ -140,8 +136,7 @@ private:
     /** The result of make_expression(), a row and its variables.
      * For required constraints, var1 and var2 hold the marker and slack.
      * For non-required ones, they hold the error variables. */
-    struct expression_result
-    {
+    struct expression_result {
         row r;
         symbol var1;
         symbol var2;
@@ -216,7 +211,7 @@ private:
     void autoupdate();
 
 private:
-    friend std::ostream& std::operator<< (std::ostream&, const simplex_solver&);
+    friend std::ostream& std::operator<<(std::ostream&, const simplex_solver&);
 
 private:
     bool auto_update_;

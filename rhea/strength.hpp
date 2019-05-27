@@ -63,7 +63,7 @@ public:
     }
 
     /** Medium constraint strength with weight factor.
-    * \param weight A 1..1000 weight factor */
+     * \param weight A 1..1000 weight factor */
     static strength medium(double weight)
     {
         check_(weight);
@@ -71,7 +71,7 @@ public:
     }
 
     /** Weak constraint strength with weight factor.
-    * \param weight A 1..10000 weight factor */
+     * \param weight A 1..10000 weight factor */
     static strength weak(double weight)
     {
         check_(weight);

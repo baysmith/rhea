@@ -128,7 +128,8 @@ void simplex_solver::add_constraint_(const constraint& c)
         substitute_out(subject, expr.r);
         rows_[subject] = std::move(expr.r);
     }
-    constraints_[c] = constraint_info{expr.var1, expr.var2, -c.expr().constant()};
+    constraints_[c]
+        = constraint_info{expr.var1, expr.var2, -c.expr().constant()};
     optimize(objective_);
 }
 

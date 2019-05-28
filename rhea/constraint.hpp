@@ -47,13 +47,13 @@ public:
 
     constraint(const linear_expression& e, relation op,
                strength str = strength::required())
-        : p_(std::make_shared<data>(e, op, str))
+        : p_(std::allocate_shared<data>(get_allocator<data>(), e, op, str))
     {
     }
 
     constraint(linear_expression&& e, relation op,
                strength str = strength::required())
-        : p_(std::make_shared<data>(std::move(e), op, str))
+        : p_(std::allocate_shared<data>(get_allocator<data>(), std::move(e), op, str))
     {
     }
 
@@ -61,21 +61,21 @@ public:
      ** constraint.
      * \sa operator| */
     constraint(const constraint& c, strength str)
-        : p_(std::make_shared<data>(c.expr(), c.oper(), str))
+        : p_(std::allocate_shared<data>(get_allocator<data>(), c.expr(), c.oper(), str))
     {
     }
 
     /** Build a constraint from a variable, a relation, and an expression. */
     constraint(const variable& lhs, relation op, linear_expression rhs,
                strength str = strength::required())
-        : p_(std::make_shared<data>(std::move(rhs -= lhs), op, str))
+        : p_(std::allocate_shared<data>(get_allocator<data>(), std::move(rhs -= lhs), op, str))
     {
     }
 
     /** Build a constraint from a relation between two expressions. */
     constraint(const linear_expression& lhs, relation op,
                linear_expression rhs, strength str = strength::required())
-        : p_(std::make_shared<data>(std::move(rhs -= lhs), op, str))
+        : p_(std::allocate_shared<data>(get_allocator<data>(), std::move(rhs -= lhs), op, str))
     {
     }
 

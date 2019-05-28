@@ -68,7 +68,9 @@ public:
 
 private:
     simplex_solver& solver_;
-    std::unordered_map<variable, item> stays_;
+    std::unordered_map<variable, item, std::hash<variable>, std::equal_to<variable>,
+                       allocator<std::pair<const variable, item>>>
+        stays_;
 };
 
 } // namespace rhea

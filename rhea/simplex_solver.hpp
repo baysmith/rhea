@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "constraint.hpp"
+#include "memory.hpp"
 #include "strength.hpp"
 #include "symbol.hpp"
 
@@ -215,13 +216,28 @@ private:
 
 private:
     bool auto_update_;
-    std::unordered_map<variable, symbol> vars_;
-    std::unordered_map<symbol, row> rows_;
-    std::unordered_map<constraint, constraint_info> constraints_;
-    std::vector<symbol> infeasible_rows_;
+    std::unordered_map<variable, symbol, std::hash<variable>,
+                       std::equal_to<variable>,
+                       allocator<std::pair<const variable, symbol>>>
+        vars_;
+    std::unordered_map<symbol, row, std::hash<symbol>,
+                       std::equal_to<symbol>,
+                       allocator<std::pair<const symbol, row>>>
+        rows_;
+    std::unordered_map<constraint, constraint_info, std::hash<constraint>,
+                       std::equal_to<constraint>,
+                       allocator<std::pair<const constraint, constraint_info>>>
+        constraints_;
+    std::vector<symbol, allocator<symbol>> infeasible_rows_;
 
-    std::unordered_map<variable, edit_info> edits_;
-    std::unordered_map<variable, stay_info> stays_;
+    std::unordered_map<variable, edit_info, std::hash<variable>,
+                       std::equal_to<variable>,
+                       allocator<std::pair<const variable, edit_info>>>
+        edits_;
+    std::unordered_map<variable, stay_info, std::hash<variable>,
+                       std::equal_to<variable>,
+                       allocator<std::pair<const variable, stay_info>>>
+        stays_;
 
     row objective_;
     row artificial_;

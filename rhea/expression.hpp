@@ -8,6 +8,7 @@
 
 #include "approx.hpp"
 #include "errors.hpp"
+#include "memory.hpp"
 #include <unordered_map>
 
 namespace rhea
@@ -23,7 +24,9 @@ class expression
 {
 public:
     typedef T var_type;
-    typedef std::unordered_map<T, double> terms_map;
+    typedef std::unordered_map<T, double, std::hash<T>, std::equal_to<T>,
+                               allocator<std::pair<const T, double>>>
+        terms_map;
     typedef std::pair<T, double> term;
 
 public:

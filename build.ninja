@@ -1,4 +1,7 @@
 cxx_flags = -I.
+# Flags for testing a custom allocator
+#cxx_flags = -I. -DUSE_COUNTING_ALLOCATOR=1
+# Flags for testing compliation without exceptions
 #cxx_flags = -I. -fno-exceptions
 libs = -L. -lrhea
 unit_test_libs = -L. -lrhea -lboost_unit_test_framework-mt
@@ -7,7 +10,8 @@ include common.ninja
 
 build rhea/symbol.o: cxx rhea/symbol.cpp
 build rhea/simplex_solver.o: cxx rhea/simplex_solver.cpp
-build librhea.a: lib rhea/symbol.o rhea/simplex_solver.o
+build rhea/memory.o: cxx rhea/memory.cpp
+build librhea.a: lib rhea/symbol.o rhea/simplex_solver.o rhea/memory.o
 
 build hello.o: cxx hello.cpp
 build hello: link hello.o | librhea.a

@@ -12,6 +12,7 @@
 #include "action_variable.hpp"
 #include "float_variable.hpp"
 #include "link_variable.hpp"
+#include "memory.hpp"
 
 namespace rhea
 {
@@ -59,7 +60,7 @@ class variable
 {
 public:
     variable()
-        : p_{std::make_shared<float_variable>(0.0)}
+        : p_{std::allocate_shared<float_variable>(get_allocator<float_variable>(), 0.0)}
     {
     }
 
@@ -94,7 +95,7 @@ public:
      * \param value  The variable's initial value
      */
     explicit variable(int value)
-        : p_{std::make_shared<float_variable>(value)}
+        : p_{std::allocate_shared<float_variable>(get_allocator<float_variable>(), value)}
     {
     }
 
@@ -102,7 +103,7 @@ public:
      * \param value  The variable's initial value
      */
     explicit variable(unsigned int value)
-        : p_{std::make_shared<float_variable>(value)}
+        : p_{std::allocate_shared<float_variable>(get_allocator<float_variable>(), value)}
     {
     }
 
@@ -110,7 +111,7 @@ public:
      * \param value  The variable's initial value
      */
     explicit variable(float value)
-        : p_{std::make_shared<float_variable>(value)}
+        : p_{std::allocate_shared<float_variable>(get_allocator<float_variable>(), value)}
     {
     }
 
@@ -118,7 +119,7 @@ public:
      * \param value  The variable's initial value
      */
     explicit variable(double value)
-        : p_{std::make_shared<float_variable>(value)}
+        : p_{std::allocate_shared<float_variable>(get_allocator<float_variable>(), value)}
     {
     }
 
@@ -135,7 +136,7 @@ public:
      * \param value  This variable will be automatically updated
      */
     variable(int& value, const linked&)
-        : p_{std::make_shared<link_int>(value)}
+        : p_{std::allocate_shared<link_int>(get_allocator<link_int>(), value)}
     {
     }
 
@@ -152,7 +153,7 @@ public:
      * \param value  This variable will be automatically updated
      */
     variable(float& value, const linked&)
-        : p_{std::make_shared<link_variable<float>>(value)}
+        : p_{std::allocate_shared<link_variable<float>>(get_allocator<link_variable<float>>(), value)}
     {
     }
 
@@ -162,7 +163,7 @@ public:
      * \param value  This variable will be automatically updated
      */
     variable(double& value, const linked&)
-        : p_{std::make_shared<link_variable<double>>(value)}
+        : p_{std::allocate_shared<link_variable<double>>(get_allocator<link_variable<double>>(), value)}
     {
     }
 
@@ -175,7 +176,7 @@ public:
      * \endcode
      */
     variable(std::function<void(double)> callback, double init_val = 0.0)
-        : p_{std::make_shared<action_variable>(callback, init_val)}
+        : p_{std::allocate_shared<action_variable>(get_allocator<action_variable>(), callback, init_val)}
     {
     }
 

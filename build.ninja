@@ -5,6 +5,7 @@ cxx_flags = -I.
 #cxx_flags = -I. -fno-exceptions
 libs = -L. -lrhea
 unit_test_libs = -L. -lrhea -lboost_unit_test_framework-mt
+exe = .exe
 
 include common.ninja
 
@@ -14,16 +15,16 @@ build rhea/memory.o: cxx rhea/memory.cpp
 build librhea.a: lib rhea/symbol.o rhea/simplex_solver.o rhea/memory.o
 
 build hello.o: cxx hello.cpp
-build hello: link hello.o | librhea.a
+build hello$exe: link hello.o | librhea.a
 
 build unit_tests/unit_tests.o: cxx unit_tests/unit_tests.cpp
-build unit_tests: link unit_tests/unit_tests.o | librhea.a
+build unit_tests$exe: link unit_tests/unit_tests.o | librhea.a
   libs = $unit_test_libs
 
 build unit_tests/speed_test.o: cxx unit_tests/speed_test.cpp
-build speed_test: link unit_tests/speed_test.o | librhea.a
+build speed_test$exe: link unit_tests/speed_test.o | librhea.a
   libs = $unit_test_libs
 
-default librhea.a hello
+default librhea.a hello$exe
 
-build all: phony librhea.a hello unit_tests speed_test
+build all: phony librhea.a hello$exe unit_tests$exe speed_test$exe
